@@ -1,0 +1,4 @@
+[submodule "web/app/themes/xp-theme"]
+	path = web/app/themes/xp-theme
+	url = https://github.com/xparty-ent/wordpress-theme
+	branch = master
