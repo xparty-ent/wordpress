@@ -72,6 +72,7 @@ jobs:
   env-setup:
     runs-on: [self-hosted, doctorparts-host]
     needs: build
+    environment: production
     steps:
       - name: Reset .env file
         run: |
@@ -82,20 +83,20 @@ jobs:
         env:
           auth_key: ${{ secrets.AUTH_KEY }}
         run: |
-          echo AUTH_KEY='${{ secrets.AUTH_KEY }}' >> .env
-          echo AUTH_SALT=${{ secrets.AUTH_SALT }}' >> .env
-          echo DB_HOST='${{ secrets.DB_HOST }}' >> .env
-          echo DB_NAME='${{ secrets.DB_NAME }}' >> .env
-          echo DB_PASSWORD='${{ secrets.DB_PASSWORD }}' >> .env
-          echo DB_USER='${{ secrets.DB_USER }}' >> .env
-          echo LOGGED_IN_KEY='${{ secrets.LOGGED_IN_KEY }}' >> .env
-          echo LOGGED_IN_SALT='${{ secrets.LOGGED_IN_SALT }}' >> .env
-          echo NONCE_KEY='${{ secrets.NONCE_KEY }}' >> .env
-          echo NONCE_SALT='${{ secrets.NONCE_SALT }}' >> .env
-          echo SECURE_AUTH_KEY='${{ secrets.SECURE_AUTH_KEY }}' >> .env
-          echo SECURE_AUTH_SALT='${{ secrets.SECURE_AUTH_SALT }}' >> .env
-          echo ACORN_ENABLE_EXPIRIMENTAL_ROUTER='${{ vars.ACORN_ENABLE_EXPIRIMENTAL_ROUTER }}' >> .env
-          echo DB_PREFIX='${{ vars.DB_PREFIX }}' >> .env
-          echo WP_ENV='${{ vars.WP_ENV }}' >> .env
-          echo WP_HOME='${{ vars.WP_HOME }}' >> .env
-          echo WP_SITEURL='${{ vars.WP_SITEURL }}' >> .env
+          echo "AUTH_KEY='${{ secrets.AUTH_KEY }}'" >> .env
+          echo "AUTH_SALT=${{ secrets.AUTH_SALT }}'" >> .env
+          echo "DB_HOST='${{ secrets.DB_HOST }}'" >> .env
+          echo "DB_NAME='${{ secrets.DB_NAME }}'" >> .env
+          echo "DB_PASSWORD='${{ secrets.DB_PASSWORD }}'" >> .env
+          echo "DB_USER='${{ secrets.DB_USER }}'" >> .env
+          echo "LOGGED_IN_KEY='${{ secrets.LOGGED_IN_KEY }}'" >> .env
+          echo "LOGGED_IN_SALT='${{ secrets.LOGGED_IN_SALT }}'" >> .env
+          echo "NONCE_KEY='${{ secrets.NONCE_KEY }}'" >> .env
+          echo "NONCE_SALT='${{ secrets.NONCE_SALT }}'" >> .env
+          echo "SECURE_AUTH_KEY='${{ secrets.SECURE_AUTH_KEY }}'" >> .env
+          echo "SECURE_AUTH_SALT='${{ secrets.SECURE_AUTH_SALT }}'" >> .env
+          echo "ACORN_ENABLE_EXPIRIMENTAL_ROUTER='${{ vars.ACORN_ENABLE_EXPIRIMENTAL_ROUTER }}'" >> .env
+          echo "DB_PREFIX='${{ vars.DB_PREFIX }}'" >> .env
+          echo "WP_ENV='${{ vars.WP_ENV }}'" >> .env
+          echo "WP_HOME='${{ vars.WP_HOME }}'" >> .env
+          echo "WP_SITEURL='${{ vars.WP_SITEURL }}'" >> .env
