@@ -84,7 +84,7 @@ jobs:
           auth_key: ${{ secrets.AUTH_KEY }}
         run: |
           echo "AUTH_KEY='${{ secrets.AUTH_KEY }}'" >> .env
-          echo "AUTH_SALT=${{ secrets.AUTH_SALT }}'" >> .env
+          echo "AUTH_SALT='${{ secrets.AUTH_SALT }}'" >> .env
           echo "DB_HOST='${{ secrets.DB_HOST }}'" >> .env
           echo "DB_NAME='${{ secrets.DB_NAME }}'" >> .env
           echo "DB_PASSWORD='${{ secrets.DB_PASSWORD }}'" >> .env
