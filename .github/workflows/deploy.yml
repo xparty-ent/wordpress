@@ -120,3 +120,7 @@ jobs:
           echo "WP_ENV='${{ vars.WP_ENV }}'" >> .env
           echo "WP_HOME='${{ vars.WP_HOME }}'" >> .env
           echo "WP_SITEURL='${{ vars.WP_SITEURL }}'" >> .env
+
+      - name: Sync permissions
+        run: |
+          sudo chmod 664 -R .
