@@ -32,7 +32,7 @@ jobs:
   
   sync:
     runs-on: [self-hosted, doctorparts-host]
-
+    needs: checkout
     steps:
       - name: Update submodules
         run: |
