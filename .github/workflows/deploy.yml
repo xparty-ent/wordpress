@@ -36,7 +36,7 @@ jobs:
 
   sync:
     runs-on: [self-hosted, doctorparts-host]
-
+    needs: checkout
     steps:
       - name: Update submodules
         run: |
@@ -52,14 +52,18 @@ jobs:
 
   build:
     runs-on: [self-hosted, doctorparts-host]
-
+    needs: sync
     steps:
+      - uses: actions/setup-node@v3
+
       - name: Install dependecies
         run: composer install --prefer-dist --no-progress
 
       - name: Install theme dependencies
         working-directory: ${{ env.THEME_PATH }}
-        run: composer install --prefer-dist --no-progress
+        run: |
+          composer install --prefer-dist --no-progress
+          npm i 
 
       - name: Build theme
         working-directory: ${{ env.THEME_PATH }}
