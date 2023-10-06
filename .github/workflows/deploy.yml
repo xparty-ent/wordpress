@@ -25,15 +25,6 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-
   sync:
     runs-on: [self-hosted, doctorparts-host]
     needs: checkout
@@ -56,8 +47,36 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
 
+      - name: Cache WP Composer packages
+        id: composer-wp-php-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-wp-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-wp-php-
+
+      - name: Cache theme Composer packages
+        id: composer-theme-php-cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.THEME_PATH }}/vendor
+          key: ${{ runner.os }}-theme-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-theme-php-
+              
+      - name: Cache theme Composer packages
+        id: composer-theme-npm-cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.THEME_PATH }}/node_modules
+          key: ${{ runner.os }}-theme-npm-${{ hashFiles(format('{0}/**/package-lock.json', env.THEME_PATH)) }}
+          restore-keys: |
+            ${{ runner.os }}-theme-npm-
+
       - name: Install dependecies
         run: composer install --prefer-dist --no-progress
+        
 
       - name: Install theme dependencies
         working-directory: ${{ env.THEME_PATH }}
@@ -78,23 +97,24 @@ jobs:
         run: |
           touch .env
           truncate -s0 .env
+
+      - name: Generate .env salts
+        run: |
+          echo "AUTH_KEY='$(tr -dc A-Za-z0-9 </dev/urandom | head -c 64 ; echo '')'" >> .env
+          echo "AUTH_SALT='$(tr -dc A-Za-z0-9 </dev/urandom | head -c 64 ; echo '')'" >> .env
+          echo "LOGGED_IN_KEY='$(tr -dc A-Za-z0-9 </dev/urandom | head -c 64 ; echo '')'" >> .env
+          echo "LOGGED_IN_SALT='$(tr -dc A-Za-z0-9 </dev/urandom | head -c 64 ; echo '')'" >> .env
+          echo "NONCE_KEY='$(tr -dc A-Za-z0-9 </dev/urandom | head -c 64 ; echo '')'" >> .env
+          echo "NONCE_SALT='$(tr -dc A-Za-z0-9 </dev/urandom | head -c 64 ; echo '')'" >> .env
+          echo "SECURE_AUTH_KEY='$(tr -dc A-Za-z0-9 </dev/urandom | head -c 64 ; echo '')'" >> .env
+          echo "SECURE_AUTH_SALT='$(tr -dc A-Za-z0-9 </dev/urandom | head -c 64 ; echo '')'" >> .env
       
       - name: Sync .env file
-        env:
-          auth_key: ${{ secrets.AUTH_KEY }}
         run: |
-          echo "AUTH_KEY='${{ secrets.AUTH_KEY }}'" >> .env
-          echo "AUTH_SALT='${{ secrets.AUTH_SALT }}'" >> .env
           echo "DB_HOST='${{ secrets.DB_HOST }}'" >> .env
           echo "DB_NAME='${{ secrets.DB_NAME }}'" >> .env
           echo "DB_PASSWORD='${{ secrets.DB_PASSWORD }}'" >> .env
           echo "DB_USER='${{ secrets.DB_USER }}'" >> .env
-          echo "LOGGED_IN_KEY='${{ secrets.LOGGED_IN_KEY }}'" >> .env
-          echo "LOGGED_IN_SALT='${{ secrets.LOGGED_IN_SALT }}'" >> .env
-          echo "NONCE_KEY='${{ secrets.NONCE_KEY }}'" >> .env
-          echo "NONCE_SALT='${{ secrets.NONCE_SALT }}'" >> .env
-          echo "SECURE_AUTH_KEY='${{ secrets.SECURE_AUTH_KEY }}'" >> .env
-          echo "SECURE_AUTH_SALT='${{ secrets.SECURE_AUTH_SALT }}'" >> .env
           echo "ACORN_ENABLE_EXPIRIMENTAL_ROUTER='${{ vars.ACORN_ENABLE_EXPIRIMENTAL_ROUTER }}'" >> .env
           echo "DB_PREFIX='${{ vars.DB_PREFIX }}'" >> .env
           echo "WP_ENV='${{ vars.WP_ENV }}'" >> .env
