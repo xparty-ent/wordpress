@@ -7,5 +7,6 @@ web/app/cache/acorn/framework/views/*.php
 web/app/languages/*.json
 web/app/cache/acorn/framework/cache/packages.php
 web/app/cache/acorn/framework/cache/services.php
+!*web/app/cache/acorn/framework/sessions/.gitkeep
 vendor/
 composer.lock
