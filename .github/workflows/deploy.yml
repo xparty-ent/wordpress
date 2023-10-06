@@ -113,4 +113,5 @@ jobs:
 
       - name: Sync permissions
         run: |
-          sudo chmod 764 -R .
+          sudo chmod 774 -R .
+          sudo chown :www-data -R .
