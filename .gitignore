@@ -7,3 +7,5 @@ web/app/cache/acorn/framework/views/*
 web/app/languages/*.json
 web/app/cache/acorn/framework/cache/packages.php
 web/app/cache/acorn/framework/cache/services.php
+vendor/
+composer.lock
