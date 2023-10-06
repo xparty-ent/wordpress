@@ -70,7 +70,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-theme-php-
               
-      - name: Cache theme Composer packages
+      - name: Cache theme npm packages
         id: composer-theme-npm-cache
         uses: actions/cache@v3
         with:
@@ -79,7 +79,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-theme-npm-
 
-      - name: Install dependecies
+      - name: Install dependencies
         run: composer install --prefer-dist --no-progress
         
 
