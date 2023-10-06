@@ -24,26 +24,16 @@ jobs:
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
-
-  sync:
-    runs-on: [self-hosted, doctorparts-host]
-    needs: checkout
-    steps:
+      
       - name: Update submodules
         run: |
           git pull --recurse-submodules
           git submodule update --remote --recursive
-
-      - name: Commit updates
-        run: |
-          git config --global user.name '#x-party Runner'
-          git config --global user.email 'runner@x-party.it'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git commit -am "[Auto] updated submodule references" && git push || echo "No changes to commit"
+  
 
   build:
     runs-on: [self-hosted, doctorparts-host]
-    needs: sync
+    needs: checkout
     steps:
       - uses: actions/setup-node@v3
 
