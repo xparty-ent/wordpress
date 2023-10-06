@@ -1,9 +1,9 @@
 **.log
 web/app/debug.log
 web/app/uploads/*/
-web/app/cache/acorn/logs/*
+web/app/cache/acorn/logs/*.log
 web/app/cache/acorn/framework/sessions/*
-web/app/cache/acorn/framework/views/*
+web/app/cache/acorn/framework/views/*.php
 web/app/languages/*.json
 web/app/cache/acorn/framework/cache/packages.php
 web/app/cache/acorn/framework/cache/services.php

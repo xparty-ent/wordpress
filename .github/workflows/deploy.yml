@@ -82,7 +82,7 @@ jobs:
         working-directory: ${{ env.THEME_PATH }}
         run: |
           composer install --prefer-dist --no-progress
-          npm i 
+          npm ci 
 
       - name: Build theme
         working-directory: ${{ env.THEME_PATH }}
