@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 permissions:
-  contents: read
+  contents: write
 
 env:
   THEME_PATH: web/app/themes/xp-theme
@@ -30,10 +30,25 @@ jobs:
           git pull --recurse-submodules
           git submodule update --remote --recursive
   
+  sync:
+    runs-on: [self-hosted, doctorparts-host]
+
+    steps:
+      - name: Update submodules
+        run: |
+          git pull --recurse-submodules
+          git submodule update --remote --recursive
+      
+      - name: Commit update
+        run: |
+          git config --global user.name '#x-party Bot'
+          git config --global user.email 'bot@x-party.it'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "Auto updated submodule references" && git push || echo "No changes to commit"
 
   build:
     runs-on: [self-hosted, doctorparts-host]
-    needs: checkout
+    needs: sync
     steps:
       - uses: actions/setup-node@v3
 
