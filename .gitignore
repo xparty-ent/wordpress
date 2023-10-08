@@ -9,5 +9,6 @@ web/app/cache/acorn/framework/cache/packages.php
 web/app/cache/acorn/framework/cache/services.php
 !*web/app/cache/acorn/framework/sessions/.gitkeep
 web/app/themes/twentytwentythree
+web/app/mu-plugins/bedrock-disallow-indexing
 vendor/
 composer.lock
