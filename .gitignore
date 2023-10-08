@@ -13,3 +13,4 @@ web/app/mu-plugins/bedrock-disallow-indexing
 web/wp
 vendor/
 composer.lock
+.env
