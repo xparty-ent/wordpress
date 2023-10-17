@@ -34,11 +34,6 @@ jobs:
     runs-on: [self-hosted, doctorparts-host]
     needs: checkout
     steps:
-      - name: Update submodules
-        run: |
-          git pull --recurse-submodules
-          git submodule update --remote --recursive
-      
       - name: Commit update
         run: |
           git config --global user.name '#x-party Bot'
