@@ -121,6 +121,9 @@ Config::define('DISALLOW_FILE_MODS', true);
 // Limit the number of post revisions
 Config::define('WP_POST_REVISIONS', env('WP_POST_REVISIONS') ?? true);
 
+// Filesystem method for auto updating
+Config::define('FS_METHOD', env('FS_METHOD', 'direct'));
+
 /**
  * Debugging Settings
  */
